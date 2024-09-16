@@ -1,0 +1,18 @@
+gateway-api/target/
+payment/target/
+order/target/
+
+### IntelliJ IDEA ###
+gateway-api/.idea/
+payment/.idea/
+order/.idea/
+
+gateway-api/*.iws
+gateway-api/*.iml
+gateway-api/*.ipr
+payment/*.iws
+payment/*.iml
+payment/*.ipr
+order/*.iws
+order/*.iml
+order/*.ipr
