@@ -4,6 +4,9 @@ order/target/
 
 ### IntelliJ IDEA ###
 .idea/
+gateway-api/.idea/
+payment/.idea/
+order/.idea/
 
 gateway-api/*.iws
 gateway-api/*.iml
