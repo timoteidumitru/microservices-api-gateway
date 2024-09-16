@@ -1,9 +1,11 @@
 package com.order.api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
+import java.util.UUID;
 
 @Entity
 @Table(name = "`order`")
@@ -12,9 +14,16 @@ import lombok.*;
 @NoArgsConstructor
 public class Order {
     @Id
-    @Generated
-    private Integer id;
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID id;
     private String name;
     private int qty;
     private Double price;
+
+    @PrePersist
+    public void prePersist() {
+        if (id == null) {
+            id = UUID.randomUUID();
+        }
+    }
 }

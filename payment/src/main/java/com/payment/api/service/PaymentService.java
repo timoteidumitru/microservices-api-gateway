@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PaymentService {
@@ -20,8 +21,13 @@ public class PaymentService {
     }
 
     // Get payment by ID
-    public Optional<Payment> getPaymentById(Integer id) {
+    public Optional<Payment> getPaymentById(UUID id) {
         return paymentRepository.findById(id);
+    }
+
+    // Method to find payment by orderId
+    public Optional<Payment> getPaymentByOrderId(UUID orderId) {
+        return paymentRepository.findByOrderId(orderId);
     }
 
     // Add new payment
@@ -32,10 +38,5 @@ public class PaymentService {
     // Update payment
     public Payment updatePayment(Payment payment) {
         return paymentRepository.save(payment);
-    }
-
-    // Delete payment by ID
-    public void deletePayment(Integer id) {
-        paymentRepository.deleteById(id);
     }
 }

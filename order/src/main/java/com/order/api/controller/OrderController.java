@@ -1,13 +1,16 @@
 package com.order.api.controller;
 
 import com.order.api.model.Order;
+import com.order.api.model.OrderHistory;
 import com.order.api.service.OrderService;
+import com.order.api.service.external.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -18,13 +21,13 @@ public class OrderController {
 
     // Get all orders
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<OrderHistory> getAllOrders() {
         return orderService.getAllOrders();
     }
 
     // Get order by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Integer id) {
+    public ResponseEntity<Order> getOrderById(@PathVariable UUID id) {
         Optional<Order> order = orderService.getOrderById(id);
         return order.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -38,7 +41,7 @@ public class OrderController {
 
     // Update an existing order
     @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Integer id, @RequestBody Order orderDetails) {
+    public ResponseEntity<Order> updateOrder(@PathVariable UUID id, @RequestBody Order orderDetails) {
         Optional<Order> order = orderService.getOrderById(id);
         if (order.isPresent()) {
             Order updatedOrder = order.get();
@@ -53,7 +56,7 @@ public class OrderController {
 
     // Delete an order
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable UUID id) {
         Optional<Order> order = orderService.getOrderById(id);
         if (order.isPresent()) {
             orderService.deleteOrder(id);

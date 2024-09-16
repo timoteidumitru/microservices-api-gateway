@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/payments")
 public class PaymentController {
-
     @Autowired
     private PaymentService paymentService;
 
@@ -24,8 +24,8 @@ public class PaymentController {
 
     // Get payment by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable Integer id) {
-        Optional<Payment> payment = paymentService.getPaymentById(id);
+    public ResponseEntity<Payment> getPaymentById(@PathVariable UUID id) {
+        Optional<Payment> payment = paymentService.getPaymentByOrderId(id);
         return payment.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
@@ -38,25 +38,13 @@ public class PaymentController {
 
     // Update an existing payment
     @PutMapping("/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable Integer id, @RequestBody Payment paymentDetails) {
+    public ResponseEntity<Payment> updatePayment(@PathVariable UUID id, @RequestBody Payment paymentDetails) {
         Optional<Payment> payment = paymentService.getPaymentById(id);
         if (payment.isPresent()) {
             Payment updatedPayment = payment.get();
             updatedPayment.setPaymentStatus(paymentDetails.getPaymentStatus());
             updatedPayment.setTransactionId(paymentDetails.getTransactionId());
             return ResponseEntity.ok(paymentService.updatePayment(updatedPayment));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    // Delete a payment
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePayment(@PathVariable Integer id) {
-        Optional<Payment> payment = paymentService.getPaymentById(id);
-        if (payment.isPresent()) {
-            paymentService.deletePayment(id);
-            return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
         }
