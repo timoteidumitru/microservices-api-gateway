@@ -3,9 +3,7 @@ payment/target/
 order/target/
 
 ### IntelliJ IDEA ###
-gateway-api/.idea/
-payment/.idea/
-order/.idea/
+.idea/
 
 gateway-api/*.iws
 gateway-api/*.iml
