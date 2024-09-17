@@ -1,9 +1,7 @@
 package com.order.api.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +11,6 @@ import org.springframework.stereotype.Component;
 import java.sql.Types;
 import java.util.UUID;
 
-@Entity
-@Table(name = "order_history")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
