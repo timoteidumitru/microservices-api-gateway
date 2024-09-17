@@ -3,7 +3,6 @@ package com.order.api.controller;
 import com.order.api.model.Order;
 import com.order.api.model.OrderHistory;
 import com.order.api.service.OrderService;
-import com.order.api.service.external.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/order")
 public class OrderController {
 
     @Autowired

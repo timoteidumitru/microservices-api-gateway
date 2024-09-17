@@ -1,16 +1,21 @@
 gateway-api/target/
+server-registry/target/
 payment/target/
 order/target/
 
 ### IntelliJ IDEA ###
 .idea/
 gateway-api/.idea/
+server-registry/.idea/
 payment/.idea/
 order/.idea/
 
 gateway-api/*.iws
 gateway-api/*.iml
 gateway-api/*.ipr
+server-registry/*.iws
+server-registry/*.iml
+server-registry/*.ipr
 payment/*.iws
 payment/*.iml
 payment/*.ipr

@@ -1,11 +1,40 @@
 server:
-  port: 8761
+  port: 7070  # Gateway service will run on this port
+
+spring:
+  application:
+    name: GATEWAY-SERVICE  # Gateway service name in Eureka
+
+  cloud:
+    gateway:
+      routes:
+        - id: order-service
+          uri: lb://ORDER-SERVICE  # The name registered in Eureka for Order Service
+          predicates:
+            - Path=/api/order/**  # Route requests starting with /api/order to Order Service
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE  # The name registered in Eureka for Payment Service
+          predicates:
+            - Path=/api/payment/**  # Route requests starting with /api/payment to Payment Service
 
 eureka:
-  instance:
-    hostname: localhost
   client:
-    registerWithEureka: false
-    fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://localhost:8761/eureka/  # Eureka server URL
+    register-with-eureka: true  # Gateway registers with Eureka
+    fetch-registry: true         # Gateway fetches the service registry
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus  # Expose metrics, health, and Prometheus endpoints
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG  # Enable debug logs for troubleshooting
