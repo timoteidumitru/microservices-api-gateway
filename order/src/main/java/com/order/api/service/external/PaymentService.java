@@ -22,7 +22,7 @@ public class PaymentService {
 
     public SendPayment findByOrderId(UUID orderId) {
         try {
-            return template.getRestTemplate().getForObject(paymentUrl + "/api/payments/" + orderId, SendPayment.class);
+            return template.getRestTemplate().getForObject(paymentUrl + "api/payments/" + orderId, SendPayment.class);
         } catch (HttpClientErrorException.NotFound e) {
             System.out.println("Payment not found for orderId: " + orderId);
             return null; // Handle 404 - Not Found
@@ -38,7 +38,7 @@ public class PaymentService {
         sendToPay.setPaymentStatus(orderStatus());
         sendToPay.setTransactionId(UUID.randomUUID().toString());
         try {
-            template.getRestTemplate().postForEntity(paymentUrl + "/api/payments",
+            template.getRestTemplate().postForEntity(paymentUrl + "api/payments",
                     sendToPay, SendPayment.class);
         } catch (Exception ex){
             System.out.println(ex.getMessage());
