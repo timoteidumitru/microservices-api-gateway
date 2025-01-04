@@ -7,6 +7,7 @@ import com.order.api.repository.OrderRepository;
 import com.order.api.service.external.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +54,15 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    // Add new order
+    @Transactional
     public Order addOrder(Order order) {
-        Order placedOrder = orderRepository.save(order);
-        paymentService.sendPayment(placedOrder);
-
-        return placedOrder;
+        try {
+            Order placedOrder = orderRepository.save(order);
+            paymentService.sendPayment(placedOrder);
+            return placedOrder;
+        } catch (RuntimeException ex) {
+            throw new IllegalStateException("Failed to add order due to transactional failure", ex);
+        }
     }
 
     // Update order

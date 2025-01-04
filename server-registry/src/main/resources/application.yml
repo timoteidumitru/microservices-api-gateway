@@ -9,14 +9,14 @@ eureka:
   instance:
     hostname: localhost
   client:
-    register-with-eureka: false  # Use kebab-case for consistency
-    fetch-registry: false        # Use kebab-case for consistency
+    register-with-eureka: false         # Use kebab-case for consistency
+    fetch-registry: false               # Use kebab-case for consistency
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics  # Expose only health and info endpoints
+        include: health,info,metrics    # Expose only health and info endpoints
   endpoint:
     health:
-      show-details: always            # Show detailed health information
+      show-details: always              # Show detailed health information

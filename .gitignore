@@ -1,24 +1,29 @@
-gateway-api/target/
+server-gateway/target/
 server-registry/target/
-payment/target/
-order/target/
+server-identity/target/
+payment-server/target/
+order-server/target/
 
 ### IntelliJ IDEA ###
 .idea/
-gateway-api/.idea/
+server-gateway/.idea/
 server-registry/.idea/
-payment/.idea/
-order/.idea/
+server-identity/.idea/
+payment-server/.idea/
+order-server/.idea/
 
-gateway-api/*.iws
-gateway-api/*.iml
-gateway-api/*.ipr
+server-gateway/*.iws
+server-gateway/*.iml
+server-gateway/*.ipr
 server-registry/*.iws
 server-registry/*.iml
 server-registry/*.ipr
-payment/*.iws
-payment/*.iml
-payment/*.ipr
-order/*.iws
-order/*.iml
-order/*.ipr
+server-identity/*.iws
+server-identity/*.iml
+server-identity/*.ipr
+payment-server/*.iws
+payment-server/*.iml
+payment-server/*.ipr
+order-server/*.iws
+order-server/*.iml
+order-server/*.ipr
