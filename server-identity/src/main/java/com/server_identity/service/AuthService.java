@@ -37,7 +37,7 @@ public class AuthService {
         return jwtService.generateToken(userName);
     }
 
-    public Boolean validateToken(String token, UserDetails user){
+    public String validateToken(String token, UserDetails user){
         return jwtService.validateToken(token, user);
     }
 
