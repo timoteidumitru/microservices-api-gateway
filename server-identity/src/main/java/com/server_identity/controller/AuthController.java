@@ -1,12 +1,15 @@
 package com.server_identity.controller;
 
+import com.server_identity.dao.AuthRequest;
 import com.server_identity.entity.UserCredentials;
 import com.server_identity.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -14,22 +17,27 @@ public class AuthController {
 
     @Autowired
     AuthService authService;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<UserCredentials> registerUser(@RequestBody UserCredentials user) {
-        UserCredentials savedUser = authService.addUser(user);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    public UserCredentials addNewUser(@RequestBody UserCredentials user) {
+        return authService.addUser(user);
     }
 
     @PostMapping("/generate-token")
-    public ResponseEntity<String> generateToken(@RequestParam String userName) {
-        String generatedToken = authService.generateToken(userName);
-        return new ResponseEntity<>(generatedToken, HttpStatus.CREATED);
+    public String getToken(@RequestBody AuthRequest authRequest) throws NoSuchAlgorithmException {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getName(), authRequest.getPassword()));
+        if (authenticate.isAuthenticated()) {
+            return authService.generateToken(authRequest.getName());
+        } else {
+            throw new RuntimeException("invalid access");
+        }
     }
 
-    @PostMapping("/validate-token")
-    public ResponseEntity<String> validateToken(@RequestBody String token, UserDetails user) {
-        String validateToken = authService.validateToken(token, user);
-        return new ResponseEntity<>(validateToken, HttpStatus.CREATED);
+    @GetMapping("/validate-token")
+    public String validateToken(@RequestParam String token) throws NoSuchAlgorithmException {
+        authService.validateToken(token);
+        return "Token is valid";
     }
 }

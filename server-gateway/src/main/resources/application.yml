@@ -18,6 +18,11 @@ spring:
           predicates:
             - Path=/api/payment/**     # Route requests starting with /api/payment to Payment Service
 
+        - id: identity-service
+          uri: lb://IDENTITY-SERVICE    # The name registered in Eureka for Identity Service
+          predicates:
+            - Path=/api/auth/**         # Route requests starting with /api/auth to Identity Service
+
 eureka:
   client:
     serviceUrl:
